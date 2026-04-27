@@ -1,124 +1,87 @@
-import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+"use client";
 
-const plans = [
-  {
-    name: "Growth Starter",
-    price: "$3,500",
-    period: "/month",
-    description: "Perfect for early-stage businesses ready to accelerate.",
-    features: [
-      "Growth strategy & roadmap",
-      "Paid media management (1 channel)",
-      "Monthly performance reports",
-      "Bi-weekly strategy calls",
-      "Landing page optimization",
-    ],
-    highlight: false,
-    cta: "Get Started",
-  },
-  {
-    name: "Scale Pro",
-    price: "$7,500",
-    period: "/month",
-    description: "For businesses serious about achieving 10x growth.",
-    features: [
-      "Everything in Growth Starter",
-      "Multi-channel paid media (up to 3)",
-      "Full funnel optimization",
-      "Weekly strategy calls",
-      "A/B testing & CRO",
-      "Email & retention marketing",
-      "Dedicated growth manager",
-    ],
-    highlight: true,
-    cta: "Most Popular",
-  },
-  {
-    name: "1000x Elite",
-    price: "Custom",
-    period: "",
-    description: "Full-service growth partnership for high-growth companies.",
-    features: [
-      "Everything in Scale Pro",
-      "Unlimited channels",
-      "Executive growth advisory",
-      "Brand strategy & positioning",
-      "PR & thought leadership",
-      "Priority support 24/7",
-      "Equity-aligned performance bonuses",
-    ],
-    highlight: false,
-    cta: "Let's Talk",
-  },
+import { Check, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const includes = [
+  "Personalized growth strategy & systems roadmap",
+  "Mindset architecture for sustained peak performance",
+  "Money & wealth-building frameworks",
+  "Business scaling systems (multi-channel, full-funnel)",
+  "Life design: energy, relationships, fulfillment",
+  "Weekly 1:1 accountability sessions",
+  "Ongoing Slack access between sessions",
+  "Performance tracking & quarterly recalibration",
 ];
 
 export function Offer() {
+  const scrollToAudit = () => {
+    const el = document.getElementById("audit");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section id="offer" className="py-24 bg-white">
-      <div className="container mx-auto px-4">
+    <section
+      id="offer"
+      className="py-24 bg-zinc-950 border-t border-zinc-800"
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-16">
-          <span className="text-sky-600 font-semibold text-sm uppercase tracking-wider">
-            Pricing
+          <span className="inline-block text-brand-400 text-sm font-semibold tracking-widest uppercase mb-4">
+            The Offer
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-3 mb-5">
-            Invest in Your Growth
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            The Skyler1000x Growth System
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Our packages are designed to deliver 10-100x returns. This isn&apos;t a cost — it&apos;s your best investment.
+          <p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            A fully personalized, end-to-end system built for ambitious people,
+            founders, and operators who are done with incremental progress and
+            ready for a quantum leap — in their life, their business, or both.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map(({ name, price, period, description, features, highlight, cta }) => (
-            <div
-              key={name}
-              className={`relative rounded-2xl border-2 p-8 flex flex-col ${
-                highlight
-                  ? "border-sky-500 bg-sky-950 text-white shadow-2xl shadow-sky-500/20 scale-105"
-                  : "border-slate-200 bg-white"
-              }`}
+        {/* Includes checklist */}
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 md:p-12 mb-12">
+          <h3 className="text-2xl font-bold text-white mb-8">
+            What&apos;s Included
+          </h3>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {includes.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-brand-500/20 flex items-center justify-center">
+                  <Check className="w-3 h-3 text-brand-400" />
+                </span>
+                <span className="text-zinc-300">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center">
+          <p className="text-zinc-400 mb-6">
+            This is not a course. Not a community. It&apos;s a direct engagement
+            with Skyler — built around your specific goals, your specific blocks,
+            your specific next level.
+          </p>
+          <Button
+            size="lg"
+            className="bg-brand-500 hover:bg-brand-400 text-zinc-950 font-bold px-10 py-4 text-lg rounded-xl group"
+            onClick={scrollToAudit}
+          >
+            Apply To Work With Skyler
+            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Button>
+          <p className="mt-4 text-sm text-zinc-500">
+            Or email directly:{" "}
+            <a
+              href="mailto:hi@skyler1000x.com"
+              className="text-brand-400 hover:text-brand-300 underline underline-offset-2"
             >
-              {highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-xs font-bold px-4 py-1 rounded-full">
-                  MOST POPULAR
-                </div>
-              )}
-              <div className="mb-6">
-                <h3 className={`font-bold text-xl mb-2 ${highlight ? "text-white" : "text-slate-900"}`}>
-                  {name}
-                </h3>
-                <div className="flex items-baseline gap-1 mb-3">
-                  <span className={`text-4xl font-black ${highlight ? "text-sky-300" : "text-slate-900"}`}>
-                    {price}
-                  </span>
-                  <span className={`text-sm ${highlight ? "text-sky-300" : "text-slate-500"}`}>{period}</span>
-                </div>
-                <p className={`text-sm ${highlight ? "text-sky-200" : "text-slate-600"}`}>{description}</p>
-              </div>
-
-              <ul className="space-y-3 mb-8 flex-1">
-                {features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <Check className={`h-5 w-5 flex-shrink-0 mt-0.5 ${highlight ? "text-sky-400" : "text-sky-600"}`} />
-                    <span className={`text-sm ${highlight ? "text-sky-100" : "text-slate-700"}`}>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Button
-                asChild
-                className={`w-full ${
-                  highlight
-                    ? "bg-sky-500 hover:bg-sky-400 text-white"
-                    : "bg-slate-900 hover:bg-slate-800 text-white"
-                }`}
-              >
-                <Link href="#audit">{cta}</Link>
-              </Button>
-            </div>
-          ))}
+              hi@skyler1000x.com
+            </a>
+          </p>
         </div>
       </div>
     </section>
