@@ -1,63 +1,59 @@
-import { AlertTriangle, TrendingDown, Clock, Compass } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+"use client";
 
-const problems = [
-  {
-    icon: TrendingDown,
-    title: "Stuck in Incremental Progress",
-    description:
-      "You're working hard but not seeing the quantum leap you know is possible — whether that's in your life, your income, or your business.",
-  },
-  {
-    icon: Compass,
-    title: "No Clear System",
-    description:
-      "You have ambition but the strategy is scattered. Generic advice, conflicting frameworks, and no cohesive system for your specific situation.",
-  },
-  {
-    icon: Clock,
-    title: "Time Without Traction",
-    description:
-      "You're putting in the hours but not building the compounding systems that actually create leverage — in business or in life.",
-  },
-  {
-    icon: AlertTriangle,
-    title: "Wrong Priorities",
-    description:
-      "You're optimizing the wrong things. Without the right map, it's easy to be busy, exhausted, and still not moving toward your actual goals.",
-  },
+import { motion } from "framer-motion";
+
+const symptoms = [
+  "Consuming more content than you apply",
+  "Setting goals but losing momentum within weeks",
+  "Earning more but feeling no closer to freedom",
+  "Knowing what to do but struggling to execute consistently",
+  "Building a business without building yourself first",
 ];
 
 export function Problem() {
   return (
-    <section id="problem" className="py-24 bg-zinc-950">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <span className="text-brand-400 font-semibold text-sm uppercase tracking-wider">
-            Sound Familiar?
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-white mt-3 mb-5">
-            Growth Feels Impossible
-          </h2>
-          <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Ambitious people, founders, and operators hit the same ceiling — not
-            because they lack capability, but because they&apos;re missing the right system.
+    <section aria-labelledby="problem-heading" className="bg-ivory">
+      <div className="section-padding container-narrow">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="mb-3 text-sm font-body font-medium uppercase tracking-[0.15em] text-clay">
+            The real problem
           </p>
-        </div>
+          <h2
+            id="problem-heading"
+            className="mb-6 max-w-2xl text-3xl font-display font-semibold text-espresso sm:text-4xl lg:text-5xl"
+          >
+            Most people do not need more motivation. They need a better system.
+          </h2>
+          <p className="mb-10 max-w-xl text-base leading-relaxed text-earth">
+            You are not lazy. You are not behind. You are operating without the
+            structure that turns effort into outcomes. Without a system, even the
+            best intentions collapse under the weight of daily life.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {problems.map(({ icon: Icon, title, description }) => (
-            <Card key={title} className="bg-zinc-900 border-zinc-800 hover:border-brand-500/40 transition-colors">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-red-400" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-                <p className="text-zinc-400 leading-relaxed">{description}</p>
-              </CardContent>
-            </Card>
+        <ul className="space-y-4" role="list">
+          {symptoms.map((s, i) => (
+            <motion.li
+              key={i}
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              className="flex items-start gap-3 text-base text-earth"
+            >
+              <span
+                className="mt-1.5 block h-2 w-2 flex-shrink-0 rounded-full bg-clay"
+                aria-hidden="true"
+              />
+              {s}
+            </motion.li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

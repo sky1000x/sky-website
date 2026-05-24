@@ -1,79 +1,59 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp } from "lucide-react";
+import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-16 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/hero.jpg"
-          alt="Skyler1000x — Build The System. Become The 1000x Version."
-          fill
-          className="object-cover opacity-20 mix-blend-luminosity"
-          priority
-        />
-      </div>
+    <section
+      aria-labelledby="hero-heading"
+      className="relative min-h-[90vh] flex items-center overflow-hidden"
+    >
+      <Image
+        src="/hero.jpg"
+        alt="Warm mountain landscape at golden hour representing growth and clarity"
+        fill
+        priority
+        className="object-cover object-center"
+        sizes="100vw"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-espresso/80 via-espresso/60 to-espresso/20" />
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/70 via-zinc-900/40 to-zinc-950/90" />
-
-      {/* Ambient glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative container mx-auto px-4 py-24 text-center text-white">
-        {/* Headline — LOCKED */}
-        <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-          Build The System.<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-amber-300">
-            Become The 1000x Version.
-          </span>
-        </h1>
-
-        {/* Sub-headline — LOCKED */}
-        <p className="text-xl md:text-2xl text-zinc-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-          For ambitious people, founders, and operators ready to build the systems
-          that unlock their next level — in life, in business, and beyond.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <Link href="#audit">
+      <div className="relative z-10 section-padding container-narrow">
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-2xl"
+        >
+          <p className="mb-4 text-sm font-body font-medium uppercase tracking-[0.2em] text-sandstone">
+            1000x Growth Systems
+          </p>
+          <h1
+            id="hero-heading"
+            className="mb-6 text-4xl font-display font-semibold leading-tight text-ivory sm:text-5xl lg:text-6xl"
+          >
+            Build the systems behind your next level.
+          </h1>
+          <p className="mb-10 max-w-xl text-base leading-relaxed text-sandstone sm:text-lg">
+            1000x Growth Systems helps men and women optimize mindset, habits,
+            money, execution, and business so they can create more clarity,
+            discipline, income, fulfillment, and freedom.
+          </p>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <Button size="lg" variant="primary" className="bg-ivory text-espresso hover:bg-bone">
+              Apply for 1000x
+            </Button>
             <Button
               size="lg"
-              className="bg-brand-500 hover:bg-brand-400 text-zinc-950 font-bold px-10 py-4 text-lg rounded-xl group"
+              variant="secondary"
+              className="border-sandstone text-sandstone hover:bg-ivory/10"
             >
-              Start My Growth Audit
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              See How It Works
             </Button>
-          </Link>
-          <Link href="#offer">
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-zinc-600 text-white hover:bg-zinc-800 px-10 py-4 text-lg rounded-xl"
-            >
-              See The System
-            </Button>
-          </Link>
-        </div>
-
-        {/* Social proof — no pricing/agency */}
-        <div className="flex flex-wrap justify-center gap-8 text-sm text-zinc-400">
-          {[
-            { icon: TrendingUp, value: "50+", label: "People Transformed" },
-            { value: "4 Pillars", label: "Mindset · Money · Business · Life" },
-            { value: "24hr", label: "Response Guarantee" },
-          ].map(({ icon: Icon, value, label }) => (
-            <div key={label} className="flex items-center gap-2">
-              {Icon && <Icon className="h-4 w-4 text-brand-400" />}
-              <span className="font-bold text-white">{value}</span>
-              <span>{label}</span>
-            </div>
-          ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,37 +1,30 @@
-import Link from "next/link";
-
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-zinc-950 text-zinc-400 py-12 border-t border-zinc-800">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link href="/" className="font-black text-2xl text-white tracking-tight">
-            SKY<span className="text-brand-500">1000X</span>
-          </Link>
+    <footer className="bg-espresso" role="contentinfo">
+      <div className="section-padding container-wide !py-12 md:!py-16">
+        <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+          <p className="text-sm font-display font-semibold tracking-wide text-ivory">
+            1000x Growth Systems
+          </p>
+          <p className="text-xs text-clay">
+            &copy; {currentYear} 1000x Growth Systems. All rights reserved.
+          </p>
+        </div>
 
-          <nav className="flex flex-wrap items-center gap-6 text-sm">
-            {["Problem", "Solution", "Method", "Offer", "About"].map((item) => (
-              <Link
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="hover:text-brand-400 transition-colors"
-              >
-                {item}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex flex-col items-center md:items-end gap-1">
-            <a
-              href="mailto:hi@skyler1000x.com"
-              className="text-brand-400 hover:text-brand-300 text-sm font-medium transition-colors"
-            >
-              hi@skyler1000x.com
-            </a>
-            <p className="text-sm text-zinc-600">
-              © {new Date().getFullYear()} Skyler1000x. All rights reserved.
-            </p>
-          </div>
+        <div className="border-t border-charcoal pt-6">
+          <p className="mx-auto max-w-3xl text-center text-xs leading-relaxed text-clay">
+            1000x Growth Systems and The Money Map are educational personal and
+            professional development programs. The information provided is for
+            educational, personal development, and professional development
+            purposes only. We do not guarantee results, income, or business
+            outcomes. Your success depends on your own effort, commitment, and
+            individual circumstances. Nothing on this page or in this program
+            should be construed as financial, legal, medical, or psychological
+            advice. Please consult with a qualified professional regarding your
+            unique situation before making financial or business decisions.
+          </p>
         </div>
       </div>
     </footer>
