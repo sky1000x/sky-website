@@ -26,8 +26,8 @@ export function LeadMagnet() {
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Something went wrong. Please try again.");
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        throw new Error(data.error ?? "Something went wrong. Please try again.");
       }
 
       setStatus("success");

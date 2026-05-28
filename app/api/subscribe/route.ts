@@ -4,14 +4,48 @@ const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 
+function toBase64Url(input: string): string {
+  // Safe base64url encoding for non-latin1 strings (e.g. JWT header/payload)
+  if (typeof Buffer !== "undefined") {
+    return Buffer.from(input)
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+  }
+  // Edge runtime fallback: encode as UTF-8 bytes then base64url
+  const bytes = new TextEncoder().encode(input);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+function arrayBufferToBase64Url(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  // Avoid spread to prevent stack overflow on large signatures
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
 async function getAccessToken(): Promise<string> {
   if (!GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
     throw new Error("Google service account credentials not configured");
   }
 
   const now = Math.floor(Date.now() / 1000);
-  const header = btoa(JSON.stringify({ alg: "RS256", typ: "JWT" }));
-  const payload = btoa(
+  const header = toBase64Url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
+  const payload = toBase64Url(
     JSON.stringify({
       iss: GOOGLE_SERVICE_ACCOUNT_EMAIL,
       scope: "https://www.googleapis.com/auth/spreadsheets",
@@ -38,17 +72,13 @@ async function getAccessToken(): Promise<string> {
   );
 
   const signatureInput = new TextEncoder().encode(header + "." + payload);
-  const signature = await crypto.subtle.sign(
+  const signatureBuffer = await crypto.subtle.sign(
     "RSASSA-PKCS1-v1_5",
     cryptoKey,
     signatureInput
   );
 
-  const sig = btoa(String.fromCharCode(...new Uint8Array(signature)))
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-
+  const sig = arrayBufferToBase64Url(signatureBuffer);
   const jwt = header + "." + payload + "." + sig;
 
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
@@ -64,13 +94,14 @@ async function getAccessToken(): Promise<string> {
     throw new Error("Failed to authenticate with Google");
   }
 
-  const tokenData = await tokenRes.json();
+  const tokenData = (await tokenRes.json()) as { access_token: string };
   return tokenData.access_token;
 }
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const body = (await request.json()) as { email?: unknown };
+    const { email } = body;
 
     if (!email || typeof email !== "string" || !email.includes("@")) {
       return NextResponse.json(
@@ -105,7 +136,7 @@ export async function POST(request: Request) {
     );
 
     if (!sheetsRes.ok) {
-      const errData = await sheetsRes.json().catch(() => ({}));
+      const errData = (await sheetsRes.json().catch(() => ({}))) as Record<string, unknown>;
       console.error("Google Sheets error:", errData);
       return NextResponse.json(
         { error: "Failed to save your information. Please try again." },

@@ -57,8 +57,8 @@ export function Framework() {
             The 5 Pillars of 1000x Growth
           </h2>
           <p className="text-base leading-relaxed text-earth">
-            Each pillar builds on the one before it. Together, they form the
-            complete system that turns potential into reality.
+            Every area of your life and business is connected. Growth in one
+            pillar accelerates all the others.
           </p>
         </div>
 

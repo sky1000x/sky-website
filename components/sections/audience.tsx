@@ -42,14 +42,14 @@ export function Audience() {
           {audiences.map((item, i) => (
             <motion.li
               key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="flex items-start gap-3 rounded-lg bg-ivory p-4"
+              className="flex items-start gap-3"
             >
-              <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-sage/20">
-                <Check className="h-3 w-3 text-charcoal" aria-hidden="true" />
+              <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-clay/20">
+                <Check className="h-3 w-3 text-earth" aria-hidden="true" />
               </div>
               <span className="text-sm leading-relaxed text-earth">{item}</span>
             </motion.li>
